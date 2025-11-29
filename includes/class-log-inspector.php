@@ -110,7 +110,9 @@ class Debug_Log_Inspector {
         }
 
         // Read log file
+        // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen
         $debug_log = fopen( $debug_log_path, 'r' );
+        // phpcs:enable WordPress.WP.AlternativeFunctions.file_system_operations_fopen
         if ( ! $debug_log ) {
             return array(
                 'error' => true,
@@ -144,7 +146,9 @@ class Debug_Log_Inspector {
             }
         }
 
+        // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         fclose( $debug_log );
+        // phpcs:enable WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
         return array(
             'error' => false,
