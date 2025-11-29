@@ -3,7 +3,7 @@
  * Plugin Name:       Debug Log Inspector
  * Plugin URI:        https://wordpress.org/plugins/debug-log-inspector/
  * Description:       Monitor debug logs for any WordPress plugin errors and display real-time status in the admin bar
- * Version:           2.0.0
+ * Version:           0.0.1
  * Requires at least: 5.0
  * Requires PHP:      7.0
  * Author:            Paluhost Web Services
