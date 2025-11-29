@@ -1,0 +1,123 @@
+/**
+ * Debug Log Inspector - Admin Styles
+ */
+
+.dli-wrap {
+    max-width: 1200px;
+}
+
+.dli-settings-container {
+    margin-top: 20px;
+}
+
+.dli-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.dli-card h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.dli-card .form-table th {
+    width: 200px;
+    padding: 20px 10px 20px 0;
+}
+
+.dli-card .form-table td {
+    padding: 15px 10px;
+}
+
+.dli-card .description {
+    font-style: italic;
+    color: #666;
+}
+
+.dli-card .required {
+    color: #dc3232;
+}
+
+/* Plugin List Table */
+.dli-card table.wp-list-table {
+    margin-top: 20px;
+}
+
+.dli-card table.wp-list-table th {
+    font-weight: 600;
+}
+
+.dli-card table.wp-list-table td {
+    vertical-align: middle;
+}
+
+.dli-card table.wp-list-table code {
+    background: #f0f0f1;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.dli-disabled-row {
+    opacity: 0.5;
+}
+
+.dli-toggle-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dli-toggle-btn:hover {
+    opacity: 0.8;
+}
+
+/* Buttons */
+.button-link-delete {
+    color: #d63638;
+    border-color: #d63638;
+}
+
+.button-link-delete:hover {
+    background: #d63638;
+    color: #fff;
+    border-color: #d63638;
+}
+
+/* Status Indicators */
+.dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .dli-card .form-table th,
+    .dli-card .form-table td {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+    }
+    
+    .dli-card table.wp-list-table {
+        font-size: 14px;
+    }
+}
+
+/* Notice styling */
+.notice {
+    margin: 20px 0;
+}
+
+.notice pre {
+    background: #f0f0f1;
+    padding: 10px;
+    border-left: 4px solid #72aee6;
+    overflow-x: auto;
+}
