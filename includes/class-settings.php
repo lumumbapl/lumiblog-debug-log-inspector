@@ -73,7 +73,7 @@ class Debug_Log_Inspector_Settings {
 
         // Verify nonce
         if ( ! isset( $_POST['debug_log_inspector_nonce'] ) || 
-             ! wp_verify_nonce( $_POST['debug_log_inspector_nonce'], 'debug_log_inspector_action' ) ) {
+             ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['debug_log_inspector_nonce'] ) ), 'debug_log_inspector_action' ) ) {
             return;
         }
 
@@ -82,7 +82,7 @@ class Debug_Log_Inspector_Settings {
             return;
         }
 
-        $action = sanitize_text_field( $_POST['debug_log_inspector_action'] );
+        $action = isset( $_POST['debug_log_inspector_action'] ) ? sanitize_text_field( wp_unslash( $_POST['debug_log_inspector_action'] ) ) : '';
 
         switch ( $action ) {
             case 'add_plugin':
@@ -107,14 +107,17 @@ class Debug_Log_Inspector_Settings {
      * Add a new plugin to monitor
      */
     private function add_plugin() {
+        // Nonce is already verified in handle_form_submission()
         $plugins = Debug_Log_Inspector::get_monitored_plugins();
 
+        // phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce verified in handle_form_submission()
         $new_plugin = array(
-            'name' => sanitize_text_field( $_POST['plugin_name'] ),
-            'file_path' => sanitize_text_field( $_POST['plugin_file_path'] ),
-            'search_terms' => sanitize_text_field( $_POST['plugin_search_terms'] ),
+            'name' => isset( $_POST['plugin_name'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_name'] ) ) : '',
+            'file_path' => isset( $_POST['plugin_file_path'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_file_path'] ) ) : '',
+            'search_terms' => isset( $_POST['plugin_search_terms'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_search_terms'] ) ) : '',
             'enabled' => true,
         );
+        // phpcs:enable WordPress.Security.NonceVerification.Missing
 
         // Check for duplicates using file_path
         if ( ! empty( $new_plugin['file_path'] ) ) {
@@ -144,15 +147,19 @@ class Debug_Log_Inspector_Settings {
      * Edit an existing plugin
      */
     private function edit_plugin() {
+        // Nonce is already verified in handle_form_submission()
         $plugins = Debug_Log_Inspector::get_monitored_plugins();
-        $index = intval( $_POST['plugin_index'] );
+        
+        // phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce verified in handle_form_submission()
+        $index = isset( $_POST['plugin_index'] ) ? intval( $_POST['plugin_index'] ) : -1;
 
         if ( isset( $plugins[$index] ) ) {
             $updated_plugin = array(
-                'name' => sanitize_text_field( $_POST['plugin_name'] ),
-                'file_path' => sanitize_text_field( $_POST['plugin_file_path'] ),
-                'search_terms' => sanitize_text_field( $_POST['plugin_search_terms'] ),
+                'name' => isset( $_POST['plugin_name'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_name'] ) ) : '',
+                'file_path' => isset( $_POST['plugin_file_path'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_file_path'] ) ) : '',
+                'search_terms' => isset( $_POST['plugin_search_terms'] ) ? sanitize_text_field( wp_unslash( $_POST['plugin_search_terms'] ) ) : '',
             );
+        // phpcs:enable WordPress.Security.NonceVerification.Missing
 
             // Check for duplicates (excluding current plugin)
             if ( ! empty( $updated_plugin['file_path'] ) ) {
@@ -185,8 +192,11 @@ class Debug_Log_Inspector_Settings {
      * Delete a plugin from monitoring
      */
     private function delete_plugin() {
+        // Nonce is already verified in handle_form_submission()
         $plugins = Debug_Log_Inspector::get_monitored_plugins();
-        $index = intval( $_POST['plugin_index'] );
+        
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in handle_form_submission()
+        $index = isset( $_POST['plugin_index'] ) ? intval( $_POST['plugin_index'] ) : -1;
 
         if ( isset( $plugins[$index] ) ) {
             unset( $plugins[$index] );
@@ -200,14 +210,18 @@ class Debug_Log_Inspector_Settings {
      * Toggle plugin enabled/disabled status
      */
     private function toggle_plugin() {
+        // Nonce is already verified in handle_form_submission()
         $plugins = Debug_Log_Inspector::get_monitored_plugins();
-        $index = intval( $_POST['plugin_index'] );
+        
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in handle_form_submission()
+        $index = isset( $_POST['plugin_index'] ) ? intval( $_POST['plugin_index'] ) : -1;
 
         if ( isset( $plugins[$index] ) ) {
             $plugins[$index]['enabled'] = ! ( isset( $plugins[$index]['enabled'] ) && $plugins[$index]['enabled'] );
             update_option( 'debug_log_inspector_plugins', $plugins );
             
             $status = $plugins[$index]['enabled'] ? __( 'enabled', 'debug-log-inspector' ) : __( 'disabled', 'debug-log-inspector' );
+            /* translators: %s: the status (enabled or disabled) */
             $this->add_admin_notice( 'success', sprintf( __( 'Plugin %s!', 'debug-log-inspector' ), $status ) );
         }
     }
@@ -216,11 +230,15 @@ class Debug_Log_Inspector_Settings {
      * Update general settings
      */
     private function update_settings() {
+        // Nonce is already verified in handle_form_submission()
+        
+        // phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce verified in handle_form_submission()
         $settings = array(
-            'log_max_bytes' => intval( $_POST['log_max_bytes'] ),
+            'log_max_bytes' => isset( $_POST['log_max_bytes'] ) ? intval( $_POST['log_max_bytes'] ) : 307200,
             'auto_enable' => isset( $_POST['auto_enable'] ),
             'show_last_error' => isset( $_POST['show_last_error'] ),
         );
+        // phpcs:enable WordPress.Security.NonceVerification.Missing
 
         update_option( 'debug_log_inspector_settings', $settings );
         $this->add_admin_notice( 'success', __( 'Settings updated successfully!', 'debug-log-inspector' ) );
@@ -245,7 +263,7 @@ class Debug_Log_Inspector_Settings {
     public function render_settings_page() {
         // Check user capabilities
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'debug-log-inspector' ) );
+            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'debug-log-inspector' ) );
         }
 
         // Get data
@@ -254,6 +272,7 @@ class Debug_Log_Inspector_Settings {
         $debug_enabled = Debug_Log_Inspector::is_debug_enabled();
 
         // Get edit mode if set
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only operation for display purposes
         $edit_mode = isset( $_GET['edit'] ) ? intval( $_GET['edit'] ) : -1;
         $edit_plugin = ( $edit_mode >= 0 && isset( $plugins[$edit_mode] ) ) ? $plugins[$edit_mode] : null;
 
@@ -261,7 +280,11 @@ class Debug_Log_Inspector_Settings {
         $notice = get_transient( 'debug_log_inspector_notice' );
         if ( $notice ) {
             delete_transient( 'debug_log_inspector_notice' );
-            echo '<div class="notice notice-' . esc_attr( $notice['type'] ) . ' is-dismissible"><p>' . esc_html( $notice['message'] ) . '</p></div>';
+            printf(
+                '<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
+                esc_attr( $notice['type'] ),
+                esc_html( $notice['message'] )
+            );
         }
 
         // Include template
