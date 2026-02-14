@@ -20,6 +20,45 @@ class Debug_Log_Inspector_Settings {
         add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
         add_action( 'admin_init', array( $this, 'handle_form_submission' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+        add_action( 'current_screen', array( $this, 'register_footer_hooks' ) );
+    }
+
+    /**
+     * Register admin footer hooks only on the plugin's settings page
+     */
+    public function register_footer_hooks() {
+        $screen = get_current_screen();
+        if ( ! $screen || 'settings_page_lumiblog-debug-log-inspector' !== $screen->id ) {
+            return;
+        }
+        add_filter( 'admin_footer_text', array( $this, 'custom_footer_text' ) );
+        add_filter( 'update_footer', array( $this, 'custom_footer_version' ), 11 );
+    }
+
+    /**
+     * Custom footer left text — rating prompt
+     *
+     * @return string
+     */
+    public function custom_footer_text() {
+        return sprintf(
+            /* translators: %s: WordPress.org review URL */
+            __( 'If you like <strong>Lumiblog Debug Log Inspector</strong>, please leave us a <a href="%s" target="_blank" rel="noopener noreferrer">★★★★★</a> rating. Thank you so much in advance!', 'lumiblog-debug-log-inspector' ),
+            'https://wordpress.org/support/plugin/lumiblog-debug-log-inspector/reviews/#new-post'
+        );
+    }
+
+    /**
+     * Custom footer right text — plugin version
+     *
+     * @return string
+     */
+    public function custom_footer_version() {
+        return sprintf(
+            /* translators: %s: plugin version number */
+            __( 'Version %s', 'lumiblog-debug-log-inspector' ),
+            DEBUG_LOG_INSPECTOR_VERSION
+        );
     }
 
     /**
@@ -185,6 +224,8 @@ class Debug_Log_Inspector_Settings {
 
             update_option( 'debug_log_inspector_plugins', $plugins );
             $this->add_admin_notice( 'success', __( 'Plugin updated successfully!', 'lumiblog-debug-log-inspector' ) );
+            wp_safe_redirect( admin_url( 'options-general.php?page=lumiblog-debug-log-inspector' ) );
+            exit;
         }
     }
 
