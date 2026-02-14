@@ -17,42 +17,26 @@ class Debug_Log_Inspector_Admin_Bar {
      * Constructor
      */
     public function __construct() {
-        add_action( 'admin_head', array( $this, 'add_css_style' ), 1 );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_bar_styles' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_admin_bar_styles' ) );
         add_action( 'admin_bar_menu', array( $this, 'add_to_admin_bar' ), 10000 );
     }
 
     /**
-     * Add CSS styles for admin bar
+     * Enqueue admin bar styles
      */
-    public function add_css_style() {
-        ?>
-        <style id="debug-log-inspector-css">
-            .dli-admin-text-red > a {
-                color: #ff3939 !important;
-            }
-            .dli-admin-text-green > a {
-                color: #00f70b !important;
-            }
-            .dli-admin-text-gray > a {
-                color: #808080 !important;
-            }
-            .dli-admin-text-last-error {
-                width: 500px !important;
-                border-top: 1px solid #808080;
-            }
-            .dli-admin-text-last-error > a {
-                height: auto !important;
-                width: 500px !important;
-                white-space: normal !important;
-                word-wrap: break-word !important;
-            }
-            .dli-admin-settings-link {
-                border-top: 1px solid #808080;
-                margin-top: 5px !important;
-                padding-top: 5px !important;
-            }
-        </style>
-        <?php
+    public function enqueue_admin_bar_styles() {
+        // Only load if admin bar is showing
+        if ( ! is_admin_bar_showing() ) {
+            return;
+        }
+
+        wp_enqueue_style(
+            'debug-log-inspector-admin-bar',
+            DEBUG_LOG_INSPECTOR_URL . 'assets/css/admin-bar.css',
+            array(),
+            DEBUG_LOG_INSPECTOR_VERSION
+        );
     }
 
     /**
@@ -76,11 +60,11 @@ class Debug_Log_Inspector_Admin_Bar {
         }
 
         // Add main menu
-        $menu_id = 'debug-log-inspector';
+        $menu_id = 'lumiblog-debug-log-inspector';
         $wp_admin_bar->add_menu( array(
             'id'    => $menu_id,
-            'title' => __( 'LOG INSPECTOR', 'debug-log-inspector' ),
-            'href'  => admin_url( 'options-general.php?page=debug-log-inspector' ),
+            'title' => __( 'LOG INSPECTOR', 'lumiblog-debug-log-inspector' ),
+            'href'  => admin_url( 'options-general.php?page=lumiblog-debug-log-inspector' ),
             'meta'  => array( 'class' => $css_class ),
         ) );
 
@@ -115,7 +99,7 @@ class Debug_Log_Inspector_Admin_Bar {
         if ( $settings['show_last_error'] && ! empty( $scan_results['last_error'] ) ) {
             $wp_admin_bar->add_menu( array(
                 'parent' => $menu_id,
-                'title'  => '<strong>' . __( 'Last Error:', 'debug-log-inspector' ) . '</strong> ' . esc_html( $scan_results['last_error'] ),
+                'title'  => '<strong>' . __( 'Last Error:', 'lumiblog-debug-log-inspector' ) . '</strong> ' . esc_html( $scan_results['last_error'] ),
                 'id'     => 'dli-last-error',
                 'href'   => '#',
                 'meta'   => array( 'class' => 'dli-admin-text-last-error' ),
@@ -125,9 +109,9 @@ class Debug_Log_Inspector_Admin_Bar {
         // Add settings link
         $wp_admin_bar->add_menu( array(
             'parent' => $menu_id,
-            'title'  => __( '⚙️ Settings', 'debug-log-inspector' ),
+            'title'  => __( '⚙️ Settings', 'lumiblog-debug-log-inspector' ),
             'id'     => 'dli-settings-link',
-            'href'   => admin_url( 'options-general.php?page=debug-log-inspector' ),
+            'href'   => admin_url( 'options-general.php?page=lumiblog-debug-log-inspector' ),
             'meta'   => array( 'class' => 'dli-admin-settings-link' ),
         ) );
     }
