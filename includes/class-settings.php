@@ -27,10 +27,10 @@ class Debug_Log_Inspector_Settings {
      */
     public function add_settings_page() {
         add_options_page(
-            __( 'Debug Log Inspector', 'debug-log-inspector' ),
-            __( 'Log Inspector', 'debug-log-inspector' ),
+            __( 'Debug Log Inspector', 'lumiblog-debug-log-inspector' ),
+            __( 'Log Inspector', 'lumiblog-debug-log-inspector' ),
             'manage_options',
-            'debug-log-inspector',
+            'lumiblog-debug-log-inspector',
             array( $this, 'render_settings_page' )
         );
     }
@@ -123,7 +123,7 @@ class Debug_Log_Inspector_Settings {
         if ( ! empty( $new_plugin['file_path'] ) ) {
             foreach ( $plugins as $plugin ) {
                 if ( ! empty( $plugin['file_path'] ) && $plugin['file_path'] === $new_plugin['file_path'] ) {
-                    $this->add_admin_notice( 'error', __( 'This plugin is already being monitored!', 'debug-log-inspector' ) );
+                    $this->add_admin_notice( 'error', __( 'This plugin is already being monitored!', 'lumiblog-debug-log-inspector' ) );
                     return;
                 }
             }
@@ -132,7 +132,7 @@ class Debug_Log_Inspector_Settings {
         // Check for duplicate names as a fallback
         foreach ( $plugins as $plugin ) {
             if ( strtolower( $plugin['name'] ) === strtolower( $new_plugin['name'] ) ) {
-                $this->add_admin_notice( 'error', __( 'A plugin with this name already exists!', 'debug-log-inspector' ) );
+                $this->add_admin_notice( 'error', __( 'A plugin with this name already exists!', 'lumiblog-debug-log-inspector' ) );
                 return;
             }
         }
@@ -140,7 +140,7 @@ class Debug_Log_Inspector_Settings {
         $plugins[] = $new_plugin;
         update_option( 'debug_log_inspector_plugins', $plugins );
 
-        $this->add_admin_notice( 'success', __( 'Plugin added successfully!', 'debug-log-inspector' ) );
+        $this->add_admin_notice( 'success', __( 'Plugin added successfully!', 'lumiblog-debug-log-inspector' ) );
     }
 
     /**
@@ -165,7 +165,7 @@ class Debug_Log_Inspector_Settings {
             if ( ! empty( $updated_plugin['file_path'] ) ) {
                 foreach ( $plugins as $i => $plugin ) {
                     if ( $i !== $index && ! empty( $plugin['file_path'] ) && $plugin['file_path'] === $updated_plugin['file_path'] ) {
-                        $this->add_admin_notice( 'error', __( 'Another plugin with this file path already exists!', 'debug-log-inspector' ) );
+                        $this->add_admin_notice( 'error', __( 'Another plugin with this file path already exists!', 'lumiblog-debug-log-inspector' ) );
                         return;
                     }
                 }
@@ -174,7 +174,7 @@ class Debug_Log_Inspector_Settings {
             // Check for duplicate names (excluding current plugin)
             foreach ( $plugins as $i => $plugin ) {
                 if ( $i !== $index && strtolower( $plugin['name'] ) === strtolower( $updated_plugin['name'] ) ) {
-                    $this->add_admin_notice( 'error', __( 'Another plugin with this name already exists!', 'debug-log-inspector' ) );
+                    $this->add_admin_notice( 'error', __( 'Another plugin with this name already exists!', 'lumiblog-debug-log-inspector' ) );
                     return;
                 }
             }
@@ -184,7 +184,7 @@ class Debug_Log_Inspector_Settings {
             $plugins[$index]['search_terms'] = $updated_plugin['search_terms'];
 
             update_option( 'debug_log_inspector_plugins', $plugins );
-            $this->add_admin_notice( 'success', __( 'Plugin updated successfully!', 'debug-log-inspector' ) );
+            $this->add_admin_notice( 'success', __( 'Plugin updated successfully!', 'lumiblog-debug-log-inspector' ) );
         }
     }
 
@@ -202,7 +202,7 @@ class Debug_Log_Inspector_Settings {
             unset( $plugins[$index] );
             $plugins = array_values( $plugins ); // Re-index array
             update_option( 'debug_log_inspector_plugins', $plugins );
-            $this->add_admin_notice( 'success', __( 'Plugin deleted successfully!', 'debug-log-inspector' ) );
+            $this->add_admin_notice( 'success', __( 'Plugin deleted successfully!', 'lumiblog-debug-log-inspector' ) );
         }
     }
 
@@ -220,9 +220,9 @@ class Debug_Log_Inspector_Settings {
             $plugins[$index]['enabled'] = ! ( isset( $plugins[$index]['enabled'] ) && $plugins[$index]['enabled'] );
             update_option( 'debug_log_inspector_plugins', $plugins );
             
-            $status = $plugins[$index]['enabled'] ? __( 'enabled', 'debug-log-inspector' ) : __( 'disabled', 'debug-log-inspector' );
+            $status = $plugins[$index]['enabled'] ? __( 'enabled', 'lumiblog-debug-log-inspector' ) : __( 'disabled', 'lumiblog-debug-log-inspector' );
             /* translators: %s: the status (enabled or disabled) */
-            $this->add_admin_notice( 'success', sprintf( __( 'Plugin %s!', 'debug-log-inspector' ), $status ) );
+            $this->add_admin_notice( 'success', sprintf( __( 'Plugin %s!', 'lumiblog-debug-log-inspector' ), $status ) );
         }
     }
 
@@ -241,7 +241,7 @@ class Debug_Log_Inspector_Settings {
         // phpcs:enable WordPress.Security.NonceVerification.Missing
 
         update_option( 'debug_log_inspector_settings', $settings );
-        $this->add_admin_notice( 'success', __( 'Settings updated successfully!', 'debug-log-inspector' ) );
+        $this->add_admin_notice( 'success', __( 'Settings updated successfully!', 'lumiblog-debug-log-inspector' ) );
     }
 
     /**
@@ -263,7 +263,7 @@ class Debug_Log_Inspector_Settings {
     public function render_settings_page() {
         // Check user capabilities
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'debug-log-inspector' ) );
+            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'lumiblog-debug-log-inspector' ) );
         }
 
         // Get data
