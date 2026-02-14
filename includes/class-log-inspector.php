@@ -169,7 +169,7 @@ class Debug_Log_Inspector {
             if ( is_string( WP_DEBUG_LOG ) ) {
                 return WP_DEBUG_LOG;
             }
-            return ABSPATH . 'wp-content/debug.log';
+            return WP_CONTENT_DIR . '/debug.log';
         }
         return false;
     }
