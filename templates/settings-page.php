@@ -75,7 +75,7 @@ define( 'WP_DEBUG_LOG', true );</pre>
                         <?php echo $edit_plugin ? esc_html__( 'Update Plugin', 'lumiblog-debug-log-inspector' ) : esc_html__( 'Add Plugin', 'lumiblog-debug-log-inspector' ); ?>
                     </button>
                     <?php if ( $edit_plugin ) : ?>
-                        <a href="<?php echo esc_url( admin_url( 'options-general.php?page=debug-log-inspector' ) ); ?>" class="button">
+                        <a href="<?php echo esc_url( admin_url( 'options-general.php?page=lumiblog-debug-log-inspector' ) ); ?>" class="button">
                             <?php esc_html_e( 'Cancel', 'lumiblog-debug-log-inspector' ); ?>
                         </a>
                     <?php endif; ?>
@@ -142,7 +142,7 @@ define( 'WP_DEBUG_LOG', true );</pre>
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <a href="<?php echo esc_url( admin_url( 'options-general.php?page=debug-log-inspector&edit=' . $dli_plugin_index ) ); ?>" class="button button-small">
+                                    <a href="<?php echo esc_url( admin_url( 'options-general.php?page=lumiblog-debug-log-inspector&edit=' . $dli_plugin_index ) ); ?>" class="button button-small">
                                         <?php esc_html_e( 'Edit', 'lumiblog-debug-log-inspector' ); ?>
                                     </a>
                                     <form method="post" action="" style="display: inline;" onsubmit="return confirm('<?php echo esc_js( __( 'Are you sure you want to delete this plugin?', 'lumiblog-debug-log-inspector' ) ); ?>');">
