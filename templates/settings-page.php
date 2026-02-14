@@ -106,16 +106,28 @@ define( 'WP_DEBUG_LOG', true );</pre>
                         // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                         foreach ( $plugins as $dli_plugin_index => $plugin ) :
                             $dli_plugin_is_enabled = isset( $plugin['enabled'] ) ? $plugin['enabled'] : true;
-                            $dli_plugin_is_active = ! empty( $plugin['file_path'] ) ? Debug_Log_Inspector::is_plugin_active( $plugin['file_path'] ) : false;
+                            $dli_plugin_is_active  = ! empty( $plugin['file_path'] ) ? Debug_Log_Inspector::is_plugin_active( $plugin['file_path'] ) : false;
+
+                            // When "Only monitor active plugins" is on and the WP plugin is inactive,
+                            // monitoring is effectively disabled regardless of the plugin's own enabled flag.
+                            $dli_auto_enable_overrides = $settings['auto_enable'] && ! empty( $plugin['file_path'] ) && ! $dli_plugin_is_active;
+                            $dli_effectively_enabled   = $dli_plugin_is_enabled && ! $dli_auto_enable_overrides;
                             ?>
-                            <tr class="<?php echo $dli_plugin_is_enabled ? '' : 'dli-disabled-row'; ?>">
+                            <tr class="<?php echo $dli_effectively_enabled ? '' : 'dli-disabled-row'; ?>">
                                 <td>
                                     <form method="post" action="" style="display: inline;">
                                         <?php wp_nonce_field( 'debug_log_inspector_action', 'debug_log_inspector_nonce' ); ?>
                                         <input type="hidden" name="debug_log_inspector_action" value="toggle_plugin">
                                         <input type="hidden" name="plugin_index" value="<?php echo esc_attr( $dli_plugin_index ); ?>">
-                                        <button type="submit" class="button-link dli-toggle-btn" title="<?php echo $dli_plugin_is_enabled ? esc_attr__( 'Disable', 'lumiblog-debug-log-inspector' ) : esc_attr__( 'Enable', 'lumiblog-debug-log-inspector' ); ?>">
-                                            <span class="dashicons dashicons-<?php echo $dli_plugin_is_enabled ? 'yes-alt' : 'dismiss'; ?>" style="color: <?php echo $dli_plugin_is_enabled ? '#46b450' : '#dc3232'; ?>;"></span>
+                                        <button type="submit" class="button-link dli-toggle-btn"
+                                            <?php if ( $dli_auto_enable_overrides ) : ?>
+                                                disabled
+                                                title="<?php esc_attr_e( 'Inactive – enable the plugin in WordPress or turn off "Only monitor active plugins"', 'lumiblog-debug-log-inspector' ); ?>"
+                                            <?php else : ?>
+                                                title="<?php echo $dli_plugin_is_enabled ? esc_attr__( 'Disable', 'lumiblog-debug-log-inspector' ) : esc_attr__( 'Enable', 'lumiblog-debug-log-inspector' ); ?>"
+                                            <?php endif; ?>
+                                        >
+                                            <span class="dashicons dashicons-<?php echo $dli_effectively_enabled ? 'yes-alt' : 'dismiss'; ?>" style="color: <?php echo $dli_effectively_enabled ? '#46b450' : '#dc3232'; ?>;"></span>
                                         </button>
                                     </form>
                                 </td>
