@@ -29,10 +29,10 @@ A powerful WordPress plugin for monitoring debug logs and tracking plugin errors
 ## 📸 Screenshots
 
 ### Settings Page
-![Settings Page](https://via.placeholder.com/800x600/f0f0f1/333333?text=Settings+Page+Screenshot)
+<img width="1641" height="657" alt="screenshot-1" src="https://github.com/user-attachments/assets/cf3fb9fa-6e49-4f19-aa0f-816de260f603" />
 
 ### Admin Bar Indicator
-![Admin Bar](https://via.placeholder.com/800x200/23282d/ffffff?text=Admin+Bar+Indicator)
+![Uploading screenshot-2.png…]()
 
 ### Plugin List Management
 ![Plugin List](https://via.placeholder.com/800x400/ffffff/333333?text=Plugin+List+Management)
