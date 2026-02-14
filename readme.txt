@@ -4,7 +4,7 @@ Donate link: https://lumumbas-blog.co.ke/support-wp-plugins
 Tags: debug, log, monitor, testing, error tracking
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -162,41 +162,28 @@ define( 'WP_DEBUG_LOG', true );
 
 **Step 3: Generate a Test Error**
 
-Option A - Using a Test Plugin File:
+Note: Ensure that the test site is running on PHP 8.4+
 
-1. Create a simple test plugin in `wp-content/plugins/test-error/test-error.php`:
+1. Add this code snippet inside of any active plugin's main file:
 
 `
-<?php
 /**
- * Plugin Name: Test Error Generator
+ * DEBUG LOG INSPECTOR DEMO - PHP 8.4 Warning Trigger
+ * REMOVE AFTER DEMO/TESTING!
  */
-if ( isset( $_GET['trigger_test_error'] ) ) {
-    trigger_error( 'This is a test error from WooCommerce integration', E_USER_WARNING );
-}
+add_action( 'load-index.php', function() {
+    if ( version_compare( PHP_VERSION, '8.4.0', '>=' ) ) {
+        $test_array = array( 'name' => 'Debug Log Inspector' );
+        $undefined_value = $test_array['email']; // Triggers warning
+        error_log( '[DLI-DEMO-PHP84] PHP 8.4 warning triggered!' );
+    }
+});
 `
 
-2. Activate the test plugin
-3. Visit: `yoursite.com/wp-admin/?trigger_test_error=1`
-4. Check your admin bar - it should turn RED
+2. Reload the site's admin dashboard to trigger the error
+3. Check your admin bar - it should turn RED
 
-Option B - Trigger a Real Error:
-
-1. Temporarily add this line to any active plugin's main file:
-`trigger_error( 'woocommerce test error for debugging', E_USER_WARNING );`
-
-2. Reload any page in your WordPress admin
-3. Remove the line immediately after testing
-
-**Step 4: Check the Results**
-
-1. Look at the admin bar - "LOG INSPECTOR" should now be RED
-2. Click on "LOG INSPECTOR" to see:
-   - WooCommerce: ERROR!
-   - Last Error: [Your test error message]
-3. Go to Settings > Log Inspector to manage monitored plugins
-
-**Step 5: View the Debug Log (Optional)**
+**Step 4: View the Debug Log (Optional)**
 
 Navigate to `wp-content/debug.log` to see the actual error entries that were logged.
 
@@ -228,7 +215,7 @@ For support, feature requests, or bug reports, please visit the WordPress.org su
 
 = Contributing =
 
-Contributions are welcome! Please visit the plugin's WordPress.org page for more information.
+Contributions are welcome! Please visit the plugin's [Github Repo](https://github.com/lumumbapl/lumiblog-debug-log-inspector) for more information.
 
 == Screenshots ==
 
@@ -242,12 +229,20 @@ Contributions are welcome! Please visit the plugin's WordPress.org page for more
 
 == Changelog ==
 
+= 1.1.0 [February 15, 2026] =
+* Fixed: Minor issues across the plugin [[Issue #1]](https://github.com/lumumbapl/lumiblog-debug-log-inspector/issues/1)
+* Enhanced: Compatibility with PHP 8.5 [[Issue #2]](https://github.com/lumumbapl/lumiblog-debug-log-inspector/issues/2)
+* Fixed: Inactive plugins incorrectly shown as enabled when "Only monitor active plugins" is turned on [[Issue #3]](https://github.com/lumumbapl/lumiblog-debug-log-inspector/issues/3)
+* Fixed: Edit button for monitored plugins not working due to incorrect page slug [[Issue #4]](https://github.com/lumumbapl/lumiblog-debug-log-inspector/issues/4)
+* Fixed: Edit form not reset to "Add New Plugin" after a successful update [[Issue #5]](https://github.com/lumumbapl/lumiblog-debug-log-inspector/issues/5)
+* Fixed: Cancel button on the Edit Plugin page not working due to incorrect page slug [[Issue #6]](https://github.com/lumumbapl/lumiblog-debug-log-inspector/issues/6)
+
 = 1.0.0 =
 * Initial release
 
 == Upgrade Notice ==
 
-= 2.0.0 =
-Minor fixes
+= 1.1.0 =
+This update fixes several bugs including inactive plugins showing as enabled, broken Edit and Cancel buttons on the settings page, and improves compatibility with PHP 8.5.
 
 
