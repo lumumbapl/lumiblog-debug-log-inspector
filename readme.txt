@@ -1,6 +1,6 @@
-=== Debug Log Inspector ===
+=== Lumiblog Debug Log Inspector ===
 Contributors: lumiblog
-Donate link: https://lumumbas.blog/support-wp-plugins
+Donate link: https://lumumbas-blog.co.ke/support-wp-plugins
 Tags: debug, log, monitor, testing, error tracking
 Requires at least: 5.0
 Tested up to: 6.9
@@ -13,7 +13,7 @@ Monitor debug logs for any WordPress plugin errors and display real-time status 
 
 == Description ==
 
-Debug Log Inspector is a powerful quality assurance and debugging tool that monitors your WordPress debug.log file for plugin-specific errors. Unlike other debug tools, it allows you to **monitor ANY WordPress plugin** through an easy-to-use settings interface - no coding required!
+Lumiblog Debug Log Inspector is a powerful quality assurance and debugging tool that monitors your WordPress debug.log file for plugin-specific errors. Unlike other debug tools, it allows you to **monitor ANY WordPress plugin** through an easy-to-use settings interface - no coding required!
 
 = Key Features =
 
@@ -62,7 +62,7 @@ define( 'WP_DEBUG_LOG', true );
 
 1. Log in to your WordPress admin panel
 2. Navigate to Plugins > Add New
-3. Search for "Debug Log Inspector"
+3. Search for "Lumiblog Debug Log Inspector"
 4. Click "Install Now" and then "Activate"
 
 = Manual Installation =
@@ -140,7 +140,7 @@ See the "Testing the Plugin" section below for detailed instructions on how to v
 
 == Testing the Plugin ==
 
-To verify Debug Log Inspector is working correctly, follow these steps:
+To verify Lumiblog Debug Log Inspector is working correctly, follow these steps:
 
 **Step 1: Enable Debug Logging**
 
@@ -224,11 +224,11 @@ The plugin is designed to be easily extendable. All classes are well-documented 
 
 = Support =
 
-For support, feature requests, or bug reports, please contact Paluhost Web Services at [your-email@paluhost.co.ke]
+For support, feature requests, or bug reports, please visit the WordPress.org support forums for this plugin.
 
 = Contributing =
 
-We welcome contributions! If you'd like to contribute to the development of Debug Log Inspector, please get in touch.
+Contributions are welcome! Please visit the plugin's WordPress.org page for more information.
 
 == Screenshots ==
 
@@ -248,6 +248,6 @@ We welcome contributions! If you'd like to contribute to the development of Debu
 == Upgrade Notice ==
 
 = 2.0.0 =
-Official release to w.org plugins repo.
+Minor fixes
 
 
