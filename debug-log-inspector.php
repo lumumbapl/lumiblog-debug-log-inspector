@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name:       Debug Log Inspector
- * Plugin URI:        https://wordpress.org/plugins/debug-log-inspector/
+ * Plugin Name:       Lumiblog Debug Log Inspector
+ * Plugin URI:        https://wordpress.org/plugins/lumiblog-debug-log-inspector/
  * Description:       Monitor debug logs for any WordPress plugin errors and display real-time status in the admin bar
  * Version:           1.0.0
  * Requires at least: 5.0
  * Requires PHP:      7.0
- * Author:            Paluhost Web Services
- * Author URI:        https://paluhost.co.ke
+ * Author:            Patrick Lumumba
+ * Author URI:        https://lumumbas.blog
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       debug-log-inspector
+ * Text Domain:       lumiblog-debug-log-inspector
  */
 
 // If this file is called directly, abort.
