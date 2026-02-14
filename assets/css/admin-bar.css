@@ -1,0 +1,34 @@
+/**
+ * Admin Bar Styles for Debug Log Inspector
+ * Styles for the admin bar menu display
+ */
+
+.dli-admin-text-red > a {
+    color: #ff3939 !important;
+}
+
+.dli-admin-text-green > a {
+    color: #00f70b !important;
+}
+
+.dli-admin-text-gray > a {
+    color: #808080 !important;
+}
+
+.dli-admin-text-last-error {
+    width: 500px !important;
+    border-top: 1px solid #808080;
+}
+
+.dli-admin-text-last-error > a {
+    height: auto !important;
+    width: 500px !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
+.dli-admin-settings-link {
+    border-top: 1px solid #808080;
+    margin-top: 5px !important;
+    padding-top: 5px !important;
+}
