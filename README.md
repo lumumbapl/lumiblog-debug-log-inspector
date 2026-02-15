@@ -7,7 +7,8 @@
 
 A powerful WordPress plugin for monitoring debug logs and tracking plugin errors in real-time. Monitor any WordPress plugin through an intuitive admin interface - no coding required!
 
-![Debug Log Inspector Banner](https://via.placeholder.com/1200x300/2271b1/ffffff?text=Debug+Log+Inspector)
+<img width="1544" height="500" alt="banner-1544x500" src="https://github.com/user-attachments/assets/09ac22bc-408a-447e-adf7-34af0ff528b1" />
+
 
 ---
 
