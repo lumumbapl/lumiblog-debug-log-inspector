@@ -220,12 +220,11 @@ Contributions are welcome! Please visit the plugin's [Github Repo](https://githu
 == Screenshots ==
 
 1. Settings page - Add new plugins to monitor
-2. Monitored plugins list with enable/disable toggles
-3. Admin bar showing green status (no errors)
+2. Admin bar showing green status (no errors)
+3. Monitored plugins list with enable/disable toggles
 4. Admin bar showing red status with error details
 5. General settings configuration
-6. Add plugin form with field descriptions
-7. Edit plugin interface
+6. Edit plugin interface
 
 == Changelog ==
 
@@ -244,5 +243,3 @@ Contributions are welcome! Please visit the plugin's [Github Repo](https://githu
 
 = 1.1.0 =
 This update fixes several bugs including inactive plugins showing as enabled, broken Edit and Cancel buttons on the settings page, and improves compatibility with PHP 8.5.
-
-
